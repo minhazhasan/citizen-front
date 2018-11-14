@@ -1,0 +1,35 @@
+<div class="container">
+   
+    <div class="childContainer" *ngIf="!userLoggedIn && !userLogPage">
+        <div class="upperContainer">
+            <div class="customPosition">
+                <mat-card style="max-height: 100%; height:100%; border-radius: 5px; z-index:1; padding: 0;">
+                    <div class="title-header" fxLayout="row" fxLayoutGap="12px" style="background-color:#27b727; color: white;">
+                      <span>
+                        <mat-icon aria-label="Login">account_box</mat-icon>
+                      </span>
+                      <span style="box-sizing:border-box; padding-top: 5px;">Sign In</span>
+                    </div>
+                    <mat-card-content>
+                      <form class="register-form" fxLayout="column" fxLayoutAlign="space-evenly none" fxLayoutGap="12px">
+                        <mat-form-field>
+                          <input matInput placeholder="Email" required />
+                        </mat-form-field>
+                        <mat-form-field>
+                          <input matInput placeholder="Passowrd" required />
+                        </mat-form-field>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <button mat-raised-button color="primary" type="submit" style="font-size:medium;">Sign In</button>
+                      </form>
+                    </mat-card-content>
+                  </mat-card>
+            </div>
+        </div>
+        <div style="flex: 1 1 auto;">
+
+        </div>
+    </div>
+
+</div>

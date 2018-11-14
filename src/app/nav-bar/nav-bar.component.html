@@ -1,0 +1,43 @@
+<!-- <div>
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <span class="spacer"><a [routerLink]="'/'">{{title}}</a></span>
+            <span>
+                <a [routerLink]="'/signin'">
+                    <button mat-icon-button>
+                        <mat-icon>how_to_reg</mat-icon>Sign Up
+                    </button>
+                </a>
+
+            </span>
+            <span>
+                <a [routerLink]="'/signup'">
+                    <button mat-icon-button>
+                        <mat-icon>account_circle</mat-icon>Sign In
+                    </button>
+                </a> </span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div> -->
+
+<mat-toolbar color="primary" [ngStyle]="{
+        'box-shadow':'0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12)', 
+        'position':'relative', 
+        'z-index': '1'
+    }">
+    <span class="toolbarContent">Citizen App</span>
+    <span>
+        <a mat-button [routerLink]="'signup'">
+            <mat-icon>how_to_reg</mat-icon>
+            <span>Sign Up</span>
+        </a>
+        <a mat-button [routerLink]="'signin'" class="customFontSize">
+            <mat-icon>account_circle</mat-icon>
+            <span>Sign In</span>
+        </a>
+        <a mat-button [routerLink]="'researcher'" class="customFontSize">
+            <mat-icon>menu</mat-icon>
+            <span>Dashboard</span>
+        </a>
+    </span>
+</mat-toolbar>
