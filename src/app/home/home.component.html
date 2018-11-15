@@ -1,6 +1,5 @@
-<app-nav-bar></app-nav-bar>
+<app-nav-bar *ngIf="!userLoggedIn"></app-nav-bar>
 <router-outlet></router-outlet>
-
 <!-- <div class="container">
    
     <div class="childContainer" *ngIf="!userLoggedIn && !userLogPage">

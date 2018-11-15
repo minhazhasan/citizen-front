@@ -20,7 +20,6 @@ import { HomeComponent } from './home/home.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 // Module Imports
-import { NgZorroModule } from './ng-zorro/ng-zorro.module';
 import { MaterialModule } from './material/material.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './services/auth-guard.service';
@@ -29,6 +28,8 @@ import { AuthServices } from './services/auth-services.service';
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatToolbarModule, MatSidenavModule, MatListModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ResearcherComponent } from './researcher/researcher.component';
+import { LazyLoadModule } from './lazy-load/lazy-load.module';
+import { CoreModule } from './core/core.module';
 
 
 
@@ -42,16 +43,17 @@ import { ResearcherComponent } from './researcher/researcher.component';
     HomeComponent,
     NavBarComponent,
     DashboardComponent,
-    ResearcherComponent
+    //ResearcherComponent
     // ResearcherComponent
   ],
   imports: [
     BrowserModule,
+    LazyLoadModule,
+    CoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    NgZorroModule,
     MaterialModule,
     FlexLayoutModule,
     MatGridListModule,
