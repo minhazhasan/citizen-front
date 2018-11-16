@@ -9,7 +9,7 @@ export const menus = [
             {
                 'name': 'Create Observation',
                 'icon': 'add_circle_outline',
-                'link': 'observations/create',
+                'link': 'createobservation',
                 'open': false,
             },
             {

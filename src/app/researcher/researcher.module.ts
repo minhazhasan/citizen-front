@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -21,6 +21,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 
 import { CoreModule } from '../core/core.module';
+import { CreateObservationComponent } from './create-observation/create-observation.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -37,8 +39,12 @@ import { CoreModule } from '../core/core.module';
         CoreModule,
         MatSidenavModule,
         PerfectScrollbarModule,
+        MatCardModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
-    declarations: [ResearcherComponent],
+    declarations: [ResearcherComponent, CreateObservationComponent],
     exports: [ResearcherComponent],
     providers: [
         {

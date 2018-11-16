@@ -14,13 +14,13 @@ const routes: Routes = [
   { path:'signin', component: SignInComponent},
   { path: 'signup', component: SignUpComponent},
   // { path: 'dashboard', redirectTo:'researcher', pathMatch: 'full'},
-  { path: 'researcher', component: ResearcherComponent},
+  // { path: 'researcher', component: ResearcherComponent},
   // { path: 'navtest', component: NavtestComponent},
   { path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

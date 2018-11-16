@@ -8,13 +8,12 @@ const routes: Routes = [
     {path: 'researcher', loadChildren: '../researcher/researcher.module#ResearcherModule'},
     //{path: 'register', loadChildren: '../register/register.module#RegisterModule'},
     //{path: 'signin', loadChildren: '../signin/login/login.module#LoginModule'},
-    // {path: 'editor', loadChildren: '../editor/editor.module#EditorModule'},
 
     //{path: '**', redirectTo: 'not-found'},
 ]
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule, ResearcherModule]
 })
 export class LazyLoadModule { }
