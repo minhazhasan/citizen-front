@@ -32,47 +32,81 @@
 </mat-card> -->
 
 <div class="container">
-   
-    <div class="childContainer" *ngIf="!userLoggedIn && !userLogPage">
-        <div class="upperContainer">
-            <div class="customPosition">
-                <mat-card style="max-height: 100%; height:100%; border-radius: 5px; z-index:1; padding: 0;">
-                    <div class="title-header" fxLayout="row" fxLayoutGap="12px">
-                      <span>
-                        <mat-icon aria-label="Register">how_to_reg</mat-icon>
-                      </span>
-                      <span style="box-sizing:border-box; padding-top: 5px;">Register</span>
-                    </div>
-                    <mat-card-content>
-                      <form class="register-form" fxLayout="column" fxLayoutAlign="space-evenly none" fxLayoutGap="12px">
-                        <mat-form-field>
-                          <input matInput placeholder="Username" required />
-                        </mat-form-field>
-                        <mat-form-field>
-                          <input matInput placeholder="Email" required />
-                        </mat-form-field>
-                        <mat-form-field>
-                          <input matInput placeholder="Passowrd" required />
-                        </mat-form-field>
-                        <mat-form-field>
-                          <mat-select placeholder="Register as" name="usersType" required>
-                            <mat-option *ngFor="let user of usersType" [value]="user">
-                              {{user}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <button mat-raised-button color="primary" type="submit" style="font-size:medium;">Register</button>
-                      </form>
-                    </mat-card-content>
-                  </mat-card>
-            </div>
-        </div>
-        <div style="flex: 1 1 auto;">
 
-        </div>
+  <div class="childContainer" *ngIf="!userLoggedIn && !userLogPage">
+    <div class="upperContainer">
+      <div class="customPosition">
+        <mat-card style="max-height: 100%; height:100%; border-radius: 5px; z-index:1; padding: 0;">
+          <div class="title-header" fxLayout="row" fxLayoutGap="12px">
+            <span>
+              <mat-icon aria-label="Register">how_to_reg</mat-icon>
+            </span>
+            <span style="box-sizing:border-box; padding-top: 5px;">Register</span>
+          </div>
+          <mat-card-content>
+            <form class="register-form" fxLayout="column" fxLayoutAlign="space-evenly none" fxLayoutGap="12px"
+              [formGroup]="registerFrom" (ngSubmit)="onSubmit()">
+              <mat-form-field>
+                <input matInput placeholder="Name" formControlName="name" />
+                <mat-hint *ngIf="!usernameControl?.touched">Please enter your name</mat-hint>
+                <mat-error *ngIf="usernameControl?.hasError('required')">
+                  Name is <strong>required</strong>
+                </mat-error>
+
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email" [errorStateMatcher]="errorMatcher"/>
+                <mat-hint *ngIf="!emailControl?.touched">Please enter your email address</mat-hint>
+                <mat-error *ngIf="emailControl?.hasError('email') && !emailControl?.hasError('required')">
+                  Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailControl?.hasError('required')">
+                  Email is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Password" formControlName="password" />
+                <mat-hint *ngIf="!passwordControl?.touched">Password must be at least 6 characters.</mat-hint>
+                <mat-error *ngIf="passwordControl.hasError('required')">
+                  Password is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="passwordControl.hasError('minlength')">
+                  Password must be <strong>at least 6 </strong>characters.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Confirm Passowrd" formControlName="confirmPassword" />
+                <mat-hint *ngIf="!confirmPasswordControl?.touched">Please confirm password.</mat-hint>
+                <mat-error *ngIf="confirmPasswordControl?.hasError && confirmPasswordControl?.hasError('ConfirmPassword')">
+                  Passwords <strong>do not</strong> match
+                </mat-error>
+                <mat-error *ngIf="confirmPasswordControl?.hasError('required')">
+                  Confirm Password is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-select placeholder="Register as" name="usersType" required formControlName="accountType">
+                  <mat-option *ngFor="let user of usersType | keyvalue" [value]="user.value">
+                    {{user.key}}
+                  </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="!accountTypeControl?.touched">Please select user type</mat-hint>
+                <mat-error *ngIf="accountTypeControl?.hasError('required')">
+                  Please select user <strong>type</strong>
+                </mat-error>
+              </mat-form-field>
+              <span></span>
+              <span></span>
+              <span></span>
+              <button mat-raised-button color="primary" type="submit" style="font-size:medium;">Register</button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
+    <div style="flex: 1 1 auto;">
+
+    </div>
+  </div>
 
 </div>

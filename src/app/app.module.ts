@@ -30,6 +30,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { ResearcherComponent } from './researcher/researcher.component';
 import { LazyLoadModule } from './lazy-load/lazy-load.module';
 import { CoreModule } from './core/core.module';
+import { EqualValidator } from './directives/equal-validator.directive';
 
 
 
@@ -43,6 +44,7 @@ import { CoreModule } from './core/core.module';
     HomeComponent,
     NavBarComponent,
     DashboardComponent,
+    EqualValidator
     //ResearcherComponent
     // ResearcherComponent
   ],
@@ -53,6 +55,7 @@ import { CoreModule } from './core/core.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     MaterialModule,
     FlexLayoutModule,

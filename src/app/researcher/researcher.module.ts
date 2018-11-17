@@ -23,6 +23,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 import { CoreModule } from '../core/core.module';
 import { CreateObservationComponent } from './create-observation/create-observation.component';
 import { FormsModule } from '@angular/forms';
+import { AddFieldsComponent } from './add-fields/add-fields.component';
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import { FormsModule } from '@angular/forms';
         MatFormFieldModule,
         MatInputModule
     ],
-    declarations: [ResearcherComponent, CreateObservationComponent],
+    declarations: [ResearcherComponent, CreateObservationComponent, AddFieldsComponent],
     exports: [ResearcherComponent],
     providers: [
         {
