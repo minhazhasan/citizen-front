@@ -11,9 +11,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarModule, PerfectScrollbarConfigInterface,
+    PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ToolbarNotificationComponent } from './toolbar-notification/toolbar-notification.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -29,7 +28,8 @@ import {
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-    suppressScrollX: true
+    suppressScrollX: true,
+    wheelPropagation: true
 };
 
 @NgModule({

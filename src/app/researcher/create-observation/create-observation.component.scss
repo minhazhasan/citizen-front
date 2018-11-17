@@ -5,11 +5,13 @@
 		padding: 0 5px;
 	}
 	.cards-container {
-		padding: 5px;
+		padding: 10px;
 		// color: white;
 	}
 
 .cdk-card-holder {
 	border: 1px solid #327ebd;
 	background-color: white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }

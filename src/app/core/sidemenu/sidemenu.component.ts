@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { menus } from './menu-element';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
 
 @Component({
   selector: 'cdk-sidemenu',
@@ -9,6 +11,7 @@ import { menus } from './menu-element';
 export class SidemenuComponent implements OnInit {
 
     @Input() iconOnly:boolean = false;
+    public config: PerfectScrollbarConfigInterface = {};
     public menus = menus;
 
     constructor() { }

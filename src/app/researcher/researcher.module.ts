@@ -8,23 +8,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarModule, PerfectScrollbarConfigInterface,
+    PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 
 import { appRoutes } from './researcher.router';
-
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-    suppressScrollX: true
-};
-
 
 import { CoreModule } from '../core/core.module';
 import { CreateObservationComponent } from './create-observation/create-observation.component';
 import { FormsModule } from '@angular/forms';
 import { AddFieldsComponent } from './add-fields/add-fields.component';
 
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true,
+    wheelPropagation: true
+};
 
 @NgModule({
     imports: [
@@ -33,7 +32,7 @@ import { AddFieldsComponent } from './add-fields/add-fields.component';
         RouterModule.forChild(appRoutes),
 
         MatToolbarModule,
-        // DashboardCrmModule,
+        FlexLayoutModule,
         MatButtonModule,
         MatIconModule,
         MatTabsModule,
@@ -54,4 +53,6 @@ import { AddFieldsComponent } from './add-fields/add-fields.component';
         }
     ]
 })
-export class ResearcherModule { }
+export class ResearcherModule {
+    public config: PerfectScrollbarConfigInterface = {};
+ }

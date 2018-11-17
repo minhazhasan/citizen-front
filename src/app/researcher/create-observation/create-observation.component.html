@@ -1,48 +1,43 @@
 <div fxLayout="column" class="components-container-gt-xs" fxLayoutGap="20px">
 
-  <div fxLayout="row" fxLayout.sm="column" fxLayout.lt-sm="column" fxFlex="50" fxLayoutAlign="start space-between"
-    fxLayoutGap="10px">
+  <div fxLayout="row" fxLayout.sm="column" fxLayout.lt-sm="column" fxLayoutAlign="space-between start" fxLayoutGap="10px" >
 
-    <div fxFlex.sm="100" class="cdk-card-holder" fxLayout="row" fxFlex="50" fxFlex.md="50" fxFlex.sm="100" style="width: 60%;">
+    <div fxFlex.sm="100" class="cdk-card-holder" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex="50"
+      fxFlex.md="50" fxFlex.sm="100">
 
       <mat-toolbar class="cards-header">
         <h1 class="mat-headline center-align">Create Observation</h1>
       </mat-toolbar>
 
       <div class="cards-container">
-
-        <div fxLayoutAlign="space-around" fxLayoutWrap>
-          <mat-card>
-
-
-            <mat-card-content>
-              <div class="formContainer">
-                <form style="display: flex; flex-direction: column; max-width: 50%;">
+        <mat-card>
+          <mat-card-content>
+            <div class="formContainer">
+              <form fxLayout="column">
+                <mat-form-field>
+                  <input matInput placeholder="Title" required>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Description" required>
+                </mat-form-field>
+                <div class="formInputGroup" style="display:flex; flex-direction: row;">
                   <mat-form-field>
-                    <input matInput placeholder="Title" required>
+                    <input matInput placeholder="Tags">
                   </mat-form-field>
-                  <mat-form-field>
-                    <input matInput placeholder="Description" required>
-                  </mat-form-field>
-                  <div class="formInputGroup" style="display:flex; flex-direction: row;">
-                    <mat-form-field>
-                      <input matInput placeholder="Tags">
-                    </mat-form-field>
 
-                    <button mat-icon-button color="primary">
-                      <mat-icon style="font-size: 35px; margin-top: 12px;">add_circle</mat-icon>
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </mat-card-content>
-            <mat-card-actions>
-              <!-- <button mat-raised-button class="mat-subheading-1 center-align" color="primary" [routerLink]="'addfields'">Manual</button> -->
-              <a mat-raised-button class="mat-subheading-1 center-align" [routerLink]="'../addfields'" color="primary">Manual</a>
-              <button mat-raised-button class="mat-subheading-1 center-align" color="accent">Import</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
+                  <button mat-icon-button color="primary">
+                    <mat-icon style="font-size: 35px; margin-top: 12px;">add_circle</mat-icon>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <!-- <button mat-raised-button class="mat-subheading-1 center-align" color="primary" [routerLink]="'addfields'">Manual</button> -->
+            <a mat-raised-button class="mat-subheading-1 center-align" [routerLink]="'../addfields'" color="primary">Manual</a>
+            <button mat-raised-button class="mat-subheading-1 center-align" color="accent">Import</button>
+          </mat-card-actions>
+        </mat-card>
       </div>
     </div>
 
