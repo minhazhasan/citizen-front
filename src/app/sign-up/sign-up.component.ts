@@ -4,6 +4,11 @@ import { AuthServices } from '../services/auth-services.service';
 import { User } from '../models/user.model';
 import { CustomErrorStateMatcher } from '../shared/customErrorStateMatcher';
 import { ConfirmPasswordValidator } from '../shared/validators/confirm-password.validator';
+import { first } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { BadInputError } from '../shared/AppErrorHandlers/bad-input-error';
+import { AppError } from '../shared/AppErrorHandlers/app-error';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,7 +32,11 @@ export class SignUpComponent implements OnInit {
     accountType: new FormControl('', Validators.required),
     deviceType: new FormControl(1)
   }, { validators: ConfirmPasswordValidator.MatchPassword });
-  constructor(private authServcie: AuthServices) { }
+
+
+  constructor(private authServcie: AuthServices, 
+    public snackBar: MatSnackBar,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -35,13 +44,24 @@ export class SignUpComponent implements OnInit {
   onSubmit() {
 
     if (this.registerFrom.valid) {
-      this.registerFrom.removeControl('confirmPassword');
-
-      this.authServcie.register(this.registerFrom.value).subscribe(res => {
-        console.log(res);
-      });
+      // this.registerFrom.removeControl('confirmPassword');
+      let message : any;
+      this.authServcie.register(this.registerFrom.value)
+        .pipe(first())
+        .subscribe(data => {
+          this.snackBarMessage("Registration Successfull", "Success");
+          this.router.navigate(['/signin']);
+        },
+        (errorRes => {
+          // if (error instanceof BadInputError){
+          //   console.log(error);
+          // }
+          if(errorRes.status === 400)
+             message = errorRes.error.error.toString().split();
+            this.snackBarMessage(message, "Falied");
+        }));
     }
-    else{
+    else {
       this.validateAllFormFields(this.registerFrom);
     }
 
@@ -82,6 +102,12 @@ export class SignUpComponent implements OnInit {
       } else if (control instanceof FormGroup) {
         this.validateAllFormFields(control);
       }
+    });
+  }
+
+  snackBarMessage(message, action){
+    this.snackBar.open(message, action, {
+      duration: 5500
     });
   }
 

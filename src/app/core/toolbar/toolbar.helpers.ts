@@ -1,26 +1,7 @@
+let user = JSON.parse(localStorage.getItem('currentUser'));
 export const ToolbarHelpers = {
-	notifications: [
-  		{
-	        id: 'id',
-	        title: 'Mail 5',
-	        lastTime: '23 Minutes ago',
-	        state: 'state'
-	    },
-	    {
-	        id: 'id',
-	        title: 'Mail 5',
-	        lastTime: '23 Minutes ago',
-	        state: 'state'
-	    },
-	    {
-	        id: 'id',
-	        title: 'Mail 5',
-	        lastTime: '23 Minutes ago',
-	        state: 'state'
-	    },
-	],
-
+	
 	currentUser: {
-		currentUserName: 'Researcher'
+		currentUserName: user ? user['name'] : null
 	}
 };
