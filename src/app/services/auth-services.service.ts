@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { BadInputError } from '../shared/AppErrorHandlers/bad-input-error';
 import { AppError } from '../shared/AppErrorHandlers/app-error';
+import { RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
 
 
 const httpOptions = {
@@ -13,17 +14,16 @@ const httpOptions = {
   })
 };
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthServices {
 
   url = "http://18.206.98.162:9000/v1/account";
   isLoggedIn = false;
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -70,6 +70,7 @@ export class AuthServices {
   logout() {
      // remove user from local storage to log user out
      localStorage.removeItem('currentUser');
+     this.router.navigate(['/signin']);
   }
 
   // responseErrorHandler(err: Response): Observable<any> {

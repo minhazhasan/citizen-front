@@ -16,6 +16,7 @@ export class ResearcherComponent implements OnInit{
   matDrawerShow: boolean = true;
   sideNavMode: string = 'side';
 
+
   ngOnChanges() {
     this.visibility = this.isVisible ? 'shown' : 'hidden';
   }
@@ -26,6 +27,14 @@ export class ResearcherComponent implements OnInit{
     this.media.subscribe((mediaChange: MediaChange) => {
       this.toggleView();
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.sideNavOpened = true;
+  // matDrawerOpened: boolean = false;
+  // matDrawerShow: boolean = true;
+  // sideNavMode: string = 'side';
+    
   }
   getRouteAnimation(outlet) {
 

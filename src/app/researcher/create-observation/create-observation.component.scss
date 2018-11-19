@@ -2,10 +2,10 @@
 	.cards-header {
 		background-color: #327ebd;
 		color: white;
-		padding: 0 5px;
+		padding: 12px;
 	}
 	.cards-container {
-		padding: 10px;
+		padding: 19px;
 		// color: white;
 	}
 
@@ -14,4 +14,10 @@
 	background-color: white;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
+}
+
+.listHeader, .listItems{
+	border: 3px solid lightgray;
+    border-radius: 5px;
+    padding: 12px;
 }

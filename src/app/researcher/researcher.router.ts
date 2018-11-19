@@ -10,7 +10,7 @@ export const appRoutes: Routes = [
     {
         path: 'citizenpanel', component: ResearcherComponent, children: [
             { path: 'createobservation', component: CreateObservationComponent },
-            { path: 'addfields', component: AddFieldsComponent},
+            { path: 'addfields/:id', component: AddFieldsComponent},
             { path: '**', redirectTo: '/citizenpanel'}
         ], canActivate: [AuthGuard]
     }];

@@ -4,8 +4,14 @@ export const menus = [
         'name': 'Observations',
         'icon': 'list',
         'link': false,
-        'open': false,
+        'open': true,
         'sub': [
+            {
+                'name': 'Dashboard',
+                'icon': 'dashboard',
+                'link': '/citizenpanel',
+                'open': false,
+            },
             {
                 'name': 'Create Observation',
                 'icon': 'add_circle_outline',

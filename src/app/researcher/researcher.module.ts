@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatChipsModule, MatTooltipModule, MatSelectModule, MatListModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { PerfectScrollbarModule, PerfectScrollbarConfigInterface,
@@ -17,8 +17,9 @@ import { appRoutes } from './researcher.router';
 
 import { CoreModule } from '../core/core.module';
 import { CreateObservationComponent } from './create-observation/create-observation.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddFieldsComponent } from './add-fields/add-fields.component';
+import { ObservationService } from '../services/observation.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -41,16 +42,21 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         PerfectScrollbarModule,
         MatCardModule,
         FormsModule,
+        ReactiveFormsModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatChipsModule,
+        MatTooltipModule,
+        MatSelectModule,
+        MatListModule
     ],
     declarations: [ResearcherComponent, CreateObservationComponent, AddFieldsComponent],
-    exports: [ResearcherComponent],
+    exports: [ResearcherComponent, RouterModule],
     providers: [
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-        }
+        }, ObservationService
     ]
 })
 export class ResearcherModule {

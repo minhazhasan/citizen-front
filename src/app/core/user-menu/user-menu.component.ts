@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
+import { AuthServices } from 'src/app/services/auth-services.service';
 
 @Component({
   selector: 'cdk-user-menu',
@@ -8,8 +9,6 @@ import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/cor
 export class UserMenuComponent implements OnInit {
 	isOpen: boolean = false;
 
-  	//currentUser = null;
-  	Hari;
   	
 
   	@Input() currentUser = null;
@@ -26,10 +25,14 @@ export class UserMenuComponent implements OnInit {
   	}
   	
     
-  	constructor(private elementRef: ElementRef) { }
+  	constructor(private elementRef: ElementRef, private authService: AuthServices) { }
 
 
   	ngOnInit() {
-  	}
+	  }
+	  
+	logout(){
+		this.authService.logout();
+	}
 
 }
