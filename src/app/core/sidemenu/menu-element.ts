@@ -21,7 +21,7 @@ export const menus = [
             {
                 'name': 'My List',
                 'icon': 'format_list_bulleted',
-                'link': 'observations/list',
+                'link': 'list',
                 'open': false,
             },
             {

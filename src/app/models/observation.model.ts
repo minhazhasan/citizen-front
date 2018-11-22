@@ -1,17 +1,14 @@
 import { Tags } from "./tags.model";
-
-export class Fields{
-    fieldTitle: String;
-    fieldType: Number;
-
-}
+import { Fields } from "./field.model";
 
 export class Observation{
-    title: String;
-    description: String;
+    accountId: string;
+    observationId: string
+    title: string;
+    description: string;
     category: Number
-    tags: String[];
+    tags: string[];
     fields: Fields[];
-
+    
     constructor(){}
 }

@@ -1,0 +1,126 @@
+<div fxLayout="column" class="components-container-gt-xs" fxLayoutGap="20px" >
+
+  <div fxLayout="row" fxLayout.sm="column" fxLayout.lt-sm="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+
+    <div fxFlex.sm="100" class="cdk-card-holder" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex
+      fxFlex.md="50" fxFlex.sm="100">
+
+      <mat-toolbar class="cards-header">
+        <h1 class="mat-headline center-align">Observations List</h1>
+      </mat-toolbar>
+
+      <div class="cards-container">
+
+        <mat-card>
+
+          <mat-card-content fxLayout="column" fxLayoutGap="25px" style="font-size: 15px;">
+            <mat-form-field style="max-width: 35%;">
+
+              <input matTooltip="Search by title, tags" matInput placeholder="Search observations" #searchInput>
+
+            </mat-form-field>
+
+            <!-- <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+
+              <mat-spinner [diameter]="35"></mat-spinner>
+
+            </div> -->
+
+            <mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc"
+              matSortDisableClear>
+              <!-- Material table HTML -->
+              <ng-container matColumnDef="title">
+                <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+                <mat-cell *matCellDef="let observation">{{observation.title}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="description">
+                <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+                <mat-cell *matCellDef="let observation">{{observation.description}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="category">
+                <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+                <mat-cell *matCellDef="let observation">{{observation.category}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="fields">
+                <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fields</mat-header-cell>
+                <mat-cell *matCellDef="let observation">
+                  <ng-template *ngFor="let field of observation.fields">
+                    <span>{{field.title}}</span>
+                  </ng-template>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="tags">
+                <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Tags</mat-header-cell>
+                <mat-cell *matCellDef="let observation">{{observation.tags}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="date">
+                <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+                <mat-cell *matCellDef="let observation">{{observation.updatedTime}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button matTooltip="View Records" mat-icon-button (click)="viewRecords(row)" color="primary">
+                    <mat-icon>receipt</mat-icon>
+                  </button>
+                  <button matTooltip="Edit Observation" mat-icon-button (click)="editObservation(row)" color="primary">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button matTooltip="Delete Observation" mat-icon-button (click)="deleteObservation(row)" color="warn">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+            <div class="mat-table_message" *ngIf="!dataSource.hasItems">No records found</div><!-- Message for empty data  -->
+            <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+
+              <mat-spinner [diameter]="35"></mat-spinner>
+
+            </div>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async"
+              [showFirstLastButtons]="true"></mat-paginator>
+            <!-- <mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner> -->
+
+          </mat-card-content>
+        </mat-card>
+
+
+      </div>
+    </div>
+
+
+    <!--Records Grid-->
+    <!-- <div fxFlex.sm="100" class="cdk-card-holder" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex="50"
+        fxFlex.md="50" fxFlex.sm="100">
+  
+        <mat-toolbar class="cards-header">
+          <h1 class="mat-headline center-align">Records</h1>
+        </mat-toolbar>
+  
+        <div class="cards-container">
+          <div class="formContainer">
+            <form #createObservationForm="ngForm">
+              <mat-card>
+  
+                <mat-card-content fxLayout="column" fxLayoutGap="25px" style="font-size: 15px;">
+
+                </mat-card-content>
+              </mat-card>
+            </form>
+          </div>
+  
+        </div>
+      </div> -->
+  </div>

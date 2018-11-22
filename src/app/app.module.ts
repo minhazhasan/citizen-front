@@ -46,7 +46,9 @@ import { WildCardRoutingModule } from './wildcard-routing.module';
 // Interceptors
 import { TokenInterceptor } from './helpers/token.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
-
+import { DataTable } from 'primeng/primeng'
+import { RecordResolver } from './resolvers/record.resolver';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 @NgModule({
   declarations: [

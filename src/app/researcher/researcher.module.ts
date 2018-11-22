@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatChipsModule, MatTooltipModule, MatSelectModule, MatListModule } from '@angular/material';
+import { MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatChipsModule, MatTooltipModule, MatSelectModule, MatListModule, MatTableModule, MatProgressSpinnerModule, MatPaginatorModule, MatSortModule, MatCheckboxModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { PerfectScrollbarModule, PerfectScrollbarConfigInterface,
@@ -20,6 +20,12 @@ import { CreateObservationComponent } from './create-observation/create-observat
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddFieldsComponent } from './add-fields/add-fields.component';
 import { ObservationService } from '../services/observation.service';
+import { ListComponent } from './list/list.component';
+
+import { DataTableModule } from 'primeng/primeng';
+import { ListRecordsComponent } from './list-records/list-records.component';
+import { RecordResolver } from '../resolvers/record.resolver';
+import { AddRecordsComponent } from './add-records/add-records.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -48,16 +54,30 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         MatChipsModule,
         MatTooltipModule,
         MatSelectModule,
-        MatListModule
+        MatListModule,
+        DataTableModule,
+        MatTableModule,
+        MatProgressSpinnerModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatCheckboxModule
     ],
-    declarations: [ResearcherComponent, CreateObservationComponent, AddFieldsComponent],
+    declarations: [
+        ResearcherComponent, 
+        CreateObservationComponent, 
+        AddFieldsComponent, 
+        ListComponent, 
+        ListRecordsComponent,
+        AddRecordsComponent
+    ],
     exports: [ResearcherComponent, RouterModule],
     providers: [
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-        }, ObservationService
-    ]
+        }, ObservationService, RecordResolver
+    ],
+    entryComponents: [AddRecordsComponent]
 })
 export class ResearcherModule {
     
