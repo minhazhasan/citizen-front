@@ -26,6 +26,8 @@ import { DataTableModule } from 'primeng/primeng';
 import { ListRecordsComponent } from './list-records/list-records.component';
 import { RecordResolver } from '../resolvers/record.resolver';
 import { AddRecordsComponent } from './add-records/add-records.component';
+import { RecordService } from '../services/record.service';
+import { UpdateObservationComponent } from './update-observation/update-observation.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -68,16 +70,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         AddFieldsComponent, 
         ListComponent, 
         ListRecordsComponent,
-        AddRecordsComponent
+        AddRecordsComponent,
+        UpdateObservationComponent
     ],
     exports: [ResearcherComponent, RouterModule],
     providers: [
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-        }, ObservationService, RecordResolver
-    ],
-    entryComponents: [AddRecordsComponent]
+        }, ObservationService, RecordService, RecordResolver
+    ]
 })
 export class ResearcherModule {
     

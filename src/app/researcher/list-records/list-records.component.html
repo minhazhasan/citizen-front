@@ -16,7 +16,7 @@
 
         <div fxflex="50" class="full">
           <mat-form-field class="full">
-            <input matInput placeholder="search">
+            <input matInput placeholder="search" #searchInput>
             <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
 
@@ -24,7 +24,7 @@
         </div>
 
         <div fxFlex="30" fxLayout="row" fxLayoutAlign="end center">
-          <button mat-raised-button color="primary">Add Record</button>
+          <button mat-raised-button color="primary" (click)="addRecord()">Add Record</button>
         </div>
 
       </div>
@@ -53,11 +53,52 @@
         </div>
 
       </div> -->
-      <div fxFlex="70" fxLayout="column" fxLayoutAlign="space-between stretch" class="record-list-container">
+      <div fxFlex fxLayout="column" fxLayoutAlign="space-between stretch" class="record-list-container">
 
         <div class="record-list">
 
+          <mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc"
+              matSortDisableClear>
+              <!-- Material table HTML -->
+              <!-- <ng-container *ngFor="let rec of dataSource.records">
 
+              </ng-container> -->
+              <ng-container matColumnDef="field">
+  
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Field</mat-header-cell>
+                <mat-cell *matCellDef="let records">{{records.fieldName}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="value">
+  
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Value</mat-header-cell>
+                <mat-cell *matCellDef="let records">{{records.fieldValue}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button matTooltip="Edit Observation" mat-icon-button (click)="editObservation(row)" color="primary">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button matTooltip="Delete Observation" mat-icon-button (click)="deleteObservation(row)" color="warn">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+            <div class="mat-table_message" *ngIf="!dataSource.hasItems">No records found</div><!-- Message for empty data  -->
+            <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+
+              <mat-spinner [diameter]="35"></mat-spinner>
+
+            </div>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async"
+              [showFirstLastButtons]="true"></mat-paginator>
+            <!-- <mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner> -->
         </div>
 
         <mat-divider></mat-divider>

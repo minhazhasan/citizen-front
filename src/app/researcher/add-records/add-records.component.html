@@ -1,3 +1,40 @@
-<p>
-  add-records works!
-</p>
+<div fxLayout="column" class="components-container-gt-xs" fxLayoutGap="20px">
+
+  <div fxLayout="row" fxLayout.sm="column" fxLayout.lt-sm="column" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+
+    <div fxFlex.sm="100" class="cdk-card-holder" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex="50"
+      fxFlex.md="50" fxFlex.sm="100">
+
+      <mat-toolbar class="cards-header">
+        <h1 class="mat-headline center-align">Add Records</h1>
+      </mat-toolbar>
+
+      <div class="cards-container">
+        <div class="formContainer">
+          <form #createRecordsForm="ngForm" (ngSubmit)="onSubmitRecords(createRecordsForm.value)" >
+            <mat-card>
+              <mat-card-content fxLayout="column" fxLayoutGap="25px" style="font-size: 15px;">
+                <ng-container *ngFor="let field of observation.fields; let i = index;">
+                  <mat-form-field>
+                    <input matInput placeholder="{{field.title}}" name="{{field.title}}" ngModel #i="ngModel" required>
+                    <mat-hint *ngIf="!i.touched">Please enter the value of {{field.title}}</mat-hint>
+                    <mat-error *ngIf="i.errors?.required">
+                      {{field.title}} is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </ng-container>
+              </mat-card-content>
+              <mat-card-actions style="text-align: right; padding: 10px;">
+                <!-- <button mat-raised-button class="mat-subheading-1 center-align" color="primary" [routerLink]="'addfields'">Manual</button> -->
+                <button mat-raised-button class="mat-subheading-1 center-align" color="primary" (click)="cancelRecord()">Cancel</button>
+                <button mat-raised-button class="mat-subheading-1 center-align" color="accent" type="submit" [disabled]="createRecordsForm.invalid">Create</button>
+              </mat-card-actions>
+            </mat-card>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

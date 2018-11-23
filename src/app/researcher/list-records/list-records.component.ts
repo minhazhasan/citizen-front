@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
 import { Observation } from 'src/app/models/observation.model';
 import { Fields } from 'src/app/models/field.model';
+import { RecordDataSource } from 'src/app/services/record.datasource';
+import { MatSort, MatPaginator } from '@angular/material';
+import { RecordService } from 'src/app/services/record.service';
+import { merge, fromEvent } from 'rxjs';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-records',
@@ -15,26 +20,61 @@ export class ListRecordsComponent implements OnInit {
   fields: any;
   checked = false;
   indeterminate = false;
+  dataSource: RecordDataSource;
 
-  constructor(private route: ActivatedRoute) { 
-    
-  }
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('searchInput') searchInput: ElementRef;
+
+  displayedColumns = ['field', 'value', 'actions'];
+
+
+  constructor(private route: ActivatedRoute, private router: Router,
+    private recordService: RecordService) {
+
+  };
 
   ngOnInit() {
     this.observationDetails = new Observation();
-    this.observationDetails = this.route.snapshot.data.data.observations[0]
+    this.observationDetails = this.route.snapshot.data.data.observations[0];
 
-    console.log(this.observationDetails);
-    
+    this.dataSource = new RecordDataSource(this.recordService);
+    this.dataSource.loadRecords(this.observationDetails.observationId)
+
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+
+    // console.log(this.observationDetails);
+
+    /* Data load will be triggered in two cases:
+- when a pagination event occurs => this.paginator.page
+- when a sort event occurs => this.sort.sortChange
+**/
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => { this.loadRecordsList(); })
+      )
+      .subscribe();
+
+    // Filtration, bind to searchInput
+    fromEvent(this.searchInput.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150), // The user can type quite quickly in the input box, and that could trigger a lot of server requests. With this operator, we are limiting the amount of server requests emitted to a maximum of one every 150ms
+        distinctUntilChanged(), // This operator will eliminate duplicate values
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadRecordsList();
+        })
+      )
+      .subscribe();
+
+  };
+
+  loadRecordsList() {
+    this.dataSource.loadRecords(this.observationDetails.observationId);
   }
 
-  employees = [
-    {select: 'Hari', position: 'Full stack developer',image:'assets/profile.jpg'},
-    {select: 'Sujith', position: 'Full stack developer',image:'assets/man.jpeg'},
-    {select: 'Ramya', position: 'Full stack developer',image:'assets/noavatar.png'},
-    {select: 'Sree', position: 'Full stack developer',image:'assets/profile.jpg'},
-    {select: 'Sruthy', position: 'Full stack developer',image:'assets/noavatar.png'},
-    {select: 'Fahad', position: 'Full stack developer',image:'assets/profile.jpg'},
-  ];
+  addRecord() {
+    this.router.navigateByUrl(`citizenpanel/addrecord/${this.observationDetails.observationId}`);
+  };
 
 }

@@ -82,4 +82,8 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl(`citizenpanel/listrecords/${observation['observationId']}`)
   }
 
+  editObservation(observation){
+    this.router.navigateByUrl(`citizenpanel/updateobservation/${observation['observationId']}`)
+  }
+
 }
