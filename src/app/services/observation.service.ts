@@ -33,4 +33,8 @@ export class ObservationService {
     });
   }
 
+  updateObservation(data){
+    return this.http.put(`${API_URL}/observation`, JSON.stringify(data));
+  }
+
 }

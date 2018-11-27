@@ -27,7 +27,7 @@ export const menus = [
             {
                 'name': 'Explore Observations',
                 'icon': 'explore',
-                'link': 'observations/explore',
+                'link': 'explore',
                 'open': false,
             }
         ]

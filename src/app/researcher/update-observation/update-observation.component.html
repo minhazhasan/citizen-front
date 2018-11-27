@@ -6,26 +6,28 @@
       fxFlex.md="50" fxFlex.sm="100">
 
       <mat-toolbar class="cards-header">
-        <h1 class="mat-headline center-align">Update Observation</h1>
+        <h1 class="mat-headline center-align">Update Observation details</h1>
       </mat-toolbar>
 
       <div class="cards-container">
         <div class="formContainer">
-          <form #updateObservationForm="ngForm" (ngSubmit)="onUpdateObservation(updateObservationForm.value)" >
+          <form #updateObservationForm="ngForm" (ngSubmit)="onUpdateObservation(updateObservationForm.value)">
             <mat-card>
               <!-- <fieldset [disabled]="disableObservationForm" style="border: 0;" [style.opacity]="disabledOpacity"> -->
               <mat-card-content fxLayout="column" fxLayoutGap="25px" style="font-size: 15px;">
 
                 <mat-form-field>
-                  <input matInput placeholder="{{observationDetails.title}}" name="title" ngModel #title="ngModel" required>
-                  <mat-hint *ngIf="!title.touched">Please enter the title of observation</mat-hint>
+                  <input matInput type="text" placeholder="Title" name="title" ngModel #title="ngModel"
+                    required  [(ngModel)]="observationDetails.title">
+                  <mat-hint *ngIf="!title.touched && !title.valid">Please enter the title of observation</mat-hint>
                   <mat-error *ngIf="title.errors?.required">
                     Title is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput placeholder="{{observationDetails.description}}" name="description" ngModel #description="ngModel" required>
-                  <mat-hint *ngIf="!description.touched">Please enter the description of observation</mat-hint>
+                  <input matInput placeholder="Description" name="description" ngModel
+                    #description="ngModel" required [(ngModel)]="observationDetails.description">
+                  <mat-hint *ngIf="!description.touched && !description.valid">Please enter the description of observation</mat-hint>
                   <mat-error *ngIf="description.errors?.required">
                     Description is <strong>required</strong>
                   </mat-error>
@@ -39,28 +41,56 @@
                     <mat-icon style="font-size: 35px; margin-top: 12px;">add_circle</mat-icon>
                   </button>
                 </div> -->
-                <mat-form-field>
+                <!-- <mat-form-field>
                   <mat-chip-list #tagList>
-                    <mat-chip *ngFor="let tag of observationDetails.tags" [selectable]="selectable" [removable]="removable" (removed)="remove(tag)"
-                      color="primary">
-                      {{tag.tag}}
-                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                    </mat-chip>
+                    <ng-container *ngFor="let tag of tags">
+                      <mat-chip [selectable]="selectable" [removable]="removable" (removed)="remove(tag)" color="primary">
+                        {{tag}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                      </mat-chip>
+                    </ng-container>
                     <input placeholder="Tags for observation" [matChipInputFor]="tagList"
                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                       (matChipInputTokenEnd)="add($event)" matTooltip="Press enter or comma for tags">
                   </mat-chip-list>
-                </mat-form-field>
+                </mat-form-field> -->
+                <div fxLayout="row" fxLayoutGap="5px">
+                  <mat-form-field>
+                    <input matInput placeholder="Tags" name="tagVal" [(ngModel)]="tagVal">
+                    <!-- <mat-hint *ngIf="!tags.touched && tags.length === 0">Please enter tags</mat-hint> -->
+                  </mat-form-field>
+                  <button color="primary" type="button" mat-icon-button (click)="addTag(tagVal)">
+                    <mat-icon style="font-size: 35px; margin-top: 22px;">add_circle</mat-icon>
+                  </button>
 
+                </div>
+                <mat-nav-list>
+                  <div *ngIf="fields.length > 0" class="listHeader" fxLayout="row" fxLayoutGap="55px" fxLayoutAlign="start space-around ">
+                    <span>Tags</span>
+                  </div>
+                  <mat-list-item *ngFor="let tag of tags">
+                    <div fxLayout="row" fxLayoutGap="55px" fxLayoutAlign="start space-around" style="margin-top:7px;"
+                      fxFlex="1 1 auto">
+                      <span fxFlex="65px">{{tag}}</span>
+                      <div style="position:relative; top: -10px;">
+                        <button color="primary" mat-icon-button (click)="removeTag(tag)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </mat-list-item>
+                </mat-nav-list>
+  
               </mat-card-content>
-            <!-- </fieldset> -->
+              <div style="margin-bottom: 25px;">
+                <mat-divider></mat-divider>
+              </div>
               <mat-card-actions style="text-align: right; padding: 10px;">
-                <!-- <button mat-raised-button class="mat-subheading-1 center-align" color="primary" [routerLink]="'addfields'">Manual</button> -->
-                <button mat-raised-button class="mat-subheading-1 center-align" color="primary" type="submit"
-                  [disabled]="createObservationForm.invalid" (click)="manualSelectionPage()">Manual</button>
-                <button mat-raised-button class="mat-subheading-1 center-align" color="accent" type="submit" [disabled]="createObservationForm.invalid"
-                  (click)="importSelectionPage()">Import</button>
+                <button mat-raised-button class="mat-subheading-1 center-align" color="accent" (click)="cancelField()">Cancel</button>
+                <button mat-raised-button class="mat-subheading-1 center-align" color="primary" [disabled]="updateObservationForm.invalid && fields.length == 0"
+                  type="submit">Update</button>
               </mat-card-actions>
+              <!-- </fieldset> -->
             </mat-card>
           </form>
         </div>
@@ -68,32 +98,32 @@
       </div>
     </div>
     <!--Manual Record Selection Page-->
-    <div fxFlex.sm="100" class="cdk-card-holder" fxLayout="column" fxLayoutAlign="space-around stretch"
-      fxFlex="50" fxFlex.md="50" fxFlex.sm="100">
+    <!-- <div fxFlex.sm="100" class="cdk-card-holder" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex="50"
+      fxFlex.md="50" fxFlex.sm="100">
 
       <mat-toolbar class="cards-header">
-        <h1 class="mat-headline center-align">Add Records</h1>
+        <h1 class="mat-headline center-align">Update Fields</h1>
       </mat-toolbar>
 
       <div class="cards-container">
         <div class="formContainer">
-          <form #addFieldsFrom="ngForm" (ngSubmit)="addObservationManually(addFieldsFrom)">
+          <form #addFieldsFrom="ngForm" (ngSubmit)="updateObservation(updateObservationForm, addFieldsFrom)" novalidate>
             <mat-card>
 
               <mat-card-content fxLayout="column" fxLayoutGap="35px" style="font-size: 15px;">
 
                 <div fxLayout="row" fxLayoutGap="5px">
                   <mat-form-field>
-                    <input matInput placeholder="Title" name="fieldTitle" ngModel #fieldTitle="ngModel" required>
-                    <mat-hint *ngIf="!fieldTitle.touched && fields.length === 0">Please enter the title of observation</mat-hint>
+                    <input matInput placeholder="Title" name="fieldTitle" ngModel #fieldTitle="ngModel" required >
+                    <mat-hint *ngIf="!fieldTitle.touched && fields.length === 0">Please enter the field title</mat-hint>
                     <mat-error *ngIf="fields.length === 0 && fieldTitle.errors?.required">
-                      Title is <strong>required</strong>
+                      At least one field is <strong>required</strong>
                     </mat-error>
                   </mat-form-field>
                   <mat-form-field>
 
 
-                    <mat-select placeholder="Field Type" name="fieldType" ngModel #fieldType="ngModel" required>
+                    <mat-select placeholder="Field Type" name="fieldType" ngModel #fieldType="ngModel" required >
                       <mat-option *ngFor="let field of fieldsType | keyvalue" [value]="field">
                         {{field.key}}
                       </mat-option>
@@ -129,7 +159,9 @@
                     </div>
                   </mat-list-item>
                 </mat-nav-list>
+
               </mat-card-content>
+              
               <mat-card-actions style="text-align: right; padding: 10px;">
                 <button mat-raised-button class="mat-subheading-1 center-align" color="primary" (click)="cancelField()">Cancel</button>
                 <button mat-raised-button class="mat-subheading-1 center-align" color="accent" [disabled]="addFieldsFrom.invalid && fields.length == 0"
@@ -140,7 +172,7 @@
         </div>
 
       </div>
-    </div>
+    </div> -->
     <!--End Manual Record Selection Page-->
   </div>
 

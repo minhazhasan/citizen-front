@@ -8,11 +8,11 @@ import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ObservationDataSource } from 'src/app/services/observation.datasource';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: 'app-explore-observations',
+  templateUrl: './explore-observations.component.html',
+  styleUrls: ['./explore-observations.component.css']
 })
-export class ListComponent implements OnInit {
+export class ExploreObservationsComponent implements OnInit {
 
   observation: Observation[];
 
@@ -85,5 +85,6 @@ export class ListComponent implements OnInit {
   editObservation(observation){
     this.router.navigateByUrl(`citizenpanel/updateobservation/${observation['observationId']}`)
   }
+
 
 }

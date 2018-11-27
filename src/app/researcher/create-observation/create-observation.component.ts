@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 import { Observation } from 'src/app/models/observation.model';
 import { ObservationService } from 'src/app/services/observation.service';
 import { Fields } from 'src/app/models/field.model';
+import { Url } from 'url-parse';
+import { GoogleAppServiceService } from 'src/app/services/google-app-service.service';
+import { RecordService } from 'src/app/services/record.service';
 
 @Component({
   selector: 'app-create-observation',
@@ -35,14 +38,20 @@ export class CreateObservationComponent implements OnInit {
   disabledOpacity: Number;
 
   @ViewChild("createObservationForm") createObservationForm: NgForm;
+  @ViewChild("addFieldsFrom") addFieldsFrom: NgForm;
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   tags: Tags[] = [];
+  data: any;
+
 
   observation: Observation;
 
-  constructor(private route: Router, private fb: FormBuilder, public snackBar: MatSnackBar, private observationService: ObservationService) {
+  constructor(private route: Router, private fb: FormBuilder, public snackBar: MatSnackBar, 
+    private observationService: ObservationService, 
+    private googleAppService: GoogleAppServiceService,
+    private addRecordService: RecordService) {
     this.manualSelection = false;
     this.importSelection = false;
     this.observation = new Observation();
@@ -124,13 +133,71 @@ export class CreateObservationComponent implements OnInit {
         });
 
     addFieldsFrom.resetForm();
+    this.createObservationForm.resetForm();
     this.manualSelection = false;
     this.enableForm();
     // this.route.navigateByUrl('/citizenpanel/list');
   }
 
-  addObservationByImport(importForm: NgForm) {
+  addObservationByImport(urlString: string) {
+    let url: string = urlString['urlInput'].toString();
+    let idExp = new RegExp(/[-\w]{25,}/);
+    let urlId = idExp.exec(url)[0];
 
+    // let prr = this.googleAppService.load(urlId)
+    //   .then( (data) => {
+    //     return this.data = data;
+    //     // for(let v of data['0']){
+    //     //   console.log(v);
+    //     // }
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   })
+
+    this.googleAppService.load(urlId)
+      .subscribe(data => {
+        this.data = data;
+        // console.log(data[0]);
+        let singleSubject = data[0];
+          for(let key in singleSubject){
+            let val = {'fieldTitle': key, 'fieldType': 3}
+            this.fields.push(val)
+          }
+
+          this.observation.fields = this.fields;
+          this.observation.category = 1;
+          console.log(this.observation);
+          this.observationService.addObservation(this.observation)
+            .subscribe(res => {
+              console.log(res['observationId']);
+              this.snackBarMessage('Observation created Successfully', 'success');
+              // let record = {
+              //   'observationId': res['observationId'],
+              //   'data': this.data.forEach(element => {
+              //     return element 
+              //   })
+              // }
+              // console.log(record);
+              // this.addRecordService.addRecord(record).subscribe(res => {
+              //   console.log('record added successfully');
+              // })
+            },
+            (err) => {
+              this.snackBarMessage('Observation can\'t be added', 'failed' );
+            })
+
+          // console.log(this.fields);
+      },
+      (error) => {
+        console.log('Can\'t load data');
+      },
+      () =>{
+        
+      })
+    
+    
+    
   }
 
   disableForm() {
@@ -148,10 +215,20 @@ export class CreateObservationComponent implements OnInit {
     this.manualSelection = false;
     this.enableForm();
   }
+
+  cancelImport(){
+    this.enableForm();
+    this.importSelection = false;
+  }
   snackBarMessage(message, action) {
     this.snackBar.open(message, action, {
       duration: 5500
     });
   }
 
+  // onNoField(){
+  //   if(this.fields.length === 0 && this.addFieldsFrom.invalid) return true
+
+  //   return false;
+  // }
 }

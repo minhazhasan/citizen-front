@@ -77,10 +77,10 @@
               <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                  <button matTooltip="Edit Observation" mat-icon-button (click)="editObservation(row)" color="primary">
+                  <button matTooltip="Edit Records" mat-icon-button (click)="editObservation(row)" color="primary">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button matTooltip="Delete Observation" mat-icon-button (click)="deleteObservation(row)" color="warn">
+                  <button matTooltip="Delete Records" mat-icon-button (click)="deleteObservation(row)" color="warn">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </mat-cell>
@@ -89,7 +89,7 @@
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
             </mat-table>
-            <div class="mat-table_message" *ngIf="!dataSource.hasItems">No records found</div><!-- Message for empty data  -->
+            <div class="mat-table_message" *ngIf="!dataSource.hasItems" style="margin-top: 12px;">No records found</div><!-- Message for empty data  -->
             <div class="spinner-container" *ngIf="dataSource.loading$ | async">
 
               <mat-spinner [diameter]="35"></mat-spinner>

@@ -28,6 +28,7 @@ import { RecordResolver } from '../resolvers/record.resolver';
 import { AddRecordsComponent } from './add-records/add-records.component';
 import { RecordService } from '../services/record.service';
 import { UpdateObservationComponent } from './update-observation/update-observation.component';
+import { ExploreObservationsComponent } from './explore-observations/explore-observations.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -71,7 +72,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         ListComponent, 
         ListRecordsComponent,
         AddRecordsComponent,
-        UpdateObservationComponent
+        UpdateObservationComponent,
+        ExploreObservationsComponent
     ],
     exports: [ResearcherComponent, RouterModule],
     providers: [

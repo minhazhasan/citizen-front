@@ -46,7 +46,7 @@
                       {{tag.tag}}
                       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                     </mat-chip>
-                    <input placeholder="Tags for observation" [matChipInputFor]="tagList"
+                    <input placeholder="Tags for observation" [matChipInputFor]="tagList" 
                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                       (matChipInputTokenEnd)="add($event)" matTooltip="Press enter or comma for tags">
                   </mat-chip-list>
@@ -72,7 +72,7 @@
       fxFlex="50" fxFlex.md="50" fxFlex.sm="100">
 
       <mat-toolbar class="cards-header">
-        <h1 class="mat-headline center-align">Add Records</h1>
+        <h1 class="mat-headline center-align">Add Fields</h1>
       </mat-toolbar>
 
       <div class="cards-container">
@@ -85,9 +85,9 @@
                 <div fxLayout="row" fxLayoutGap="5px">
                   <mat-form-field>
                     <input matInput placeholder="Title" name="fieldTitle" ngModel #fieldTitle="ngModel" required>
-                    <mat-hint *ngIf="!fieldTitle.touched && fields.length === 0">Please enter the title of observation</mat-hint>
+                    <mat-hint *ngIf="!fieldTitle.touched && fields.length === 0">Please enter the title of field</mat-hint>
                     <mat-error *ngIf="fields.length === 0 && fieldTitle.errors?.required">
-                      Title is <strong>required</strong>
+                      Field is <strong>required</strong>
                     </mat-error>
                   </mat-form-field>
                   <mat-form-field>
@@ -111,7 +111,7 @@
                   </button>
 
                 </div>
-                <mat-nav-list>
+                <mat-nav-list #fieldList>
                   <div *ngIf="fields.length > 0" class="listHeader" fxLayout="row" fxLayoutGap="55px" fxLayoutAlign="start space-around ">
                     <span>Field Title</span>
                     <span>Field Type</span>
@@ -132,7 +132,7 @@
               </mat-card-content>
               <mat-card-actions style="text-align: right; padding: 10px;">
                 <button mat-raised-button class="mat-subheading-1 center-align" color="primary" (click)="cancelField()">Cancel</button>
-                <button mat-raised-button class="mat-subheading-1 center-align" color="accent" [disabled]="addFieldsFrom.invalid && fields.length == 0"
+                <button mat-raised-button class="mat-subheading-1 center-align" color="accent" [disabled]="(fields.length == 0)"
                   type="submit">Create</button>
               </mat-card-actions>
             </mat-card>
@@ -154,7 +154,7 @@
 
       <div class="cards-container">
         <div class="formContainer">
-          <form #addImportUrlFrom="ngForm" (ngSubmit)="addObservationByImport(addImportUrlFrom)">
+          <form #addImportUrlFrom="ngForm" (ngSubmit)="addObservationByImport(addImportUrlFrom.value)">
             <mat-card>
 
               <mat-card-content fxLayout="column" fxLayoutGap="35px" style="font-size: 15px;">
@@ -170,7 +170,7 @@
                 </div>
               </mat-card-content>
               <mat-card-actions style="text-align: right; padding: 10px;">
-                <button mat-raised-button class="mat-subheading-1 center-align" color="primary" (click)="cancelField()">Cancel</button>
+                <button mat-raised-button class="mat-subheading-1 center-align" color="primary" type="button" (click)="cancelImport()">Cancel</button>
                 <button mat-raised-button class="mat-subheading-1 center-align" color="accent" [disabled]="addImportUrlFrom.invalid && fields.length == 0"
                   tytpe="submit">Import</button>
               </mat-card-actions>
