@@ -39,7 +39,7 @@ export class ListRecordsComponent implements OnInit {
     this.observationDetails = this.route.snapshot.data.data.observations[0];
 
     this.dataSource = new RecordDataSource(this.recordService);
-    this.dataSource.loadRecords(this.observationDetails.observationId)
+    this.dataSource.loadRecords(this.observationDetails.observationId, 0, 10, '')
 
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
@@ -70,7 +70,10 @@ export class ListRecordsComponent implements OnInit {
   };
 
   loadRecordsList() {
-    this.dataSource.loadRecords(this.observationDetails.observationId);
+    this.dataSource.loadRecords(this.observationDetails.observationId, 
+      this.paginator.pageIndex, 
+      this.paginator.pageSize, 
+      this.searchInput.nativeElement['value']);
   }
 
   addRecord() {

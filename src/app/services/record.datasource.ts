@@ -14,9 +14,9 @@ export class RecordDataSource extends BaseDataSource {
         super();
     }
 
-    loadRecords(observationId: string) {
+    loadRecords(observationId: string, pageNumber, pageSize, searchText) {
         this.loadingSubject.next(true);
-        this.recordService.getRecord(observationId).pipe(
+        this.recordService.getRecord(observationId, pageNumber, pageSize, searchText).pipe(
             tap(res => {
                 
                 

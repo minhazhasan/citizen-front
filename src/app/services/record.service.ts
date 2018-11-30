@@ -14,9 +14,13 @@ export class RecordService {
     return this.http.post(`${API_URL}/record`, data);
   };
 
-  getRecord(observationId: string){
+  getRecord(observationId: string, pageNumber, pageSize, searchText){
     return this.http.get(`${API_URL}/record`, {
-      params: new HttpParams().set('observationId', observationId)
+      params: new HttpParams()
+      .set('observationId', observationId)
+      .set('searchText', searchText)
+      .set('page', pageNumber.toString())
+      .set('limit', pageSize.toString())
     });
   };
 }
