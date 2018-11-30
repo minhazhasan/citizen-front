@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { InterceptorSkipHeader } from '../helpers/token.interceptor';
 import { BehaviorSubject } from 'rxjs';
@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 const httpOptions = {
   headers: new HttpHeaders().set(InterceptorSkipHeader, '')
 };
+
+const API_URL = "http://18.206.98.162:9000/v1";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class GoogleAppServiceService {
 
   constructor(public http: HttpClient) { }
 
-  load(id) {
+  load(observationId, spreadsheetId) {
     // if (this.data) {
     //   // already loaded data
     //   return Promise.resolve(this.data);
@@ -26,59 +28,41 @@ export class GoogleAppServiceService {
 
 
 
-    var url = 'https://spreadsheets.google.com/feeds/list/' + id + '/od6/public/values?alt=json';
-    // don't have the data yet
-    // return new Promise(resolve => {
-    //   // We're using Angular Http provider to request the data,
-    //   // then on the response it'll map the JSON data to a parsed JS object.
-    //   // Next we process the data and resolve the promise with the new data.
-    //   this.http.get(url, httpOptions)
-    //     .pipe(
-    //       map(res => res)
-    //     )
-    //     .subscribe( data => {
-    //       console.log( 'Raw Data', data );
+    // var url = 'https://spreadsheets.google.com/feeds/list/' + id + '/od6/public/values?alt=json';
+
+    // return this.http.get(url, httpOptions)
+    //   .pipe(
+    //     map(data => {
     //       this.data = data['feed'].entry;
 
     //       let returnArray: Array<any> = [];
-    //       if( this.data && this.data.length > 0 ) {
-    //         this.data.forEach( ( entry, index ) => {
+
+    //       if (this.data && this.data.length > 0) {
+    //         this.data.forEach((entry, index) => {
     //           var obj = {};
-    //           for( let x in entry ) {
-    //             if( x.includes('gsx$') && entry[x].$t ){
+    //           for (let x in entry) {
+    //             if (x.includes('gsx$') && entry[x].$t) {
     //               obj[x.split('$')[1]] = entry[x]['$t'];
     //               // console.log( x.split('$')[1] + ': ' + entry[x]['$t'] );
     //             }
     //           }
-    //           returnArray.push( obj );
-    //         });
+
+    //           returnArray.push(obj);
+    //         })
     //       }
-    //       resolve(returnArray);
-    //     });
-    // });
+    //       return returnArray
+    //     })
+    //   )
 
-    return this.http.get(url, httpOptions)
-      .pipe(
-        map(data => {
-          this.data = data['feed'].entry;
+    return this.http.post(`${API_URL}/google-sheet/import`, {
+      params: new HttpParams()
+      .set('observationId', observationId)
+      .set('spreadSheetId', spreadsheetId)
+    })
+  };
 
-          let returnArray: Array<any> = [];
-
-          if (this.data && this.data.length > 0) {
-            this.data.forEach((entry, index) => {
-              var obj = {};
-              for (let x in entry) {
-                if (x.includes('gsx$') && entry[x].$t) {
-                  obj[x.split('$')[1]] = entry[x]['$t'];
-                  // console.log( x.split('$')[1] + ': ' + entry[x]['$t'] );
-                }
-              }
-
-              returnArray.push(obj);
-            })
-          }
-          return returnArray
-        })
-      )
-  }
+  importSreadsheet(data){
+    console.log(data);
+    return this.http.post(`${API_URL}/google-sheet/import`, JSON.stringify(data));
+  };
 }

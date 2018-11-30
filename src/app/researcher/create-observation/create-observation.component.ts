@@ -48,8 +48,8 @@ export class CreateObservationComponent implements OnInit {
 
   observation: Observation;
 
-  constructor(private route: Router, private fb: FormBuilder, public snackBar: MatSnackBar, 
-    private observationService: ObservationService, 
+  constructor(private route: Router, private fb: FormBuilder, public snackBar: MatSnackBar,
+    private observationService: ObservationService,
     private googleAppService: GoogleAppServiceService,
     private addRecordService: RecordService) {
     this.manualSelection = false;
@@ -86,6 +86,7 @@ export class CreateObservationComponent implements OnInit {
     console.log(observation.title);
     this.observation.title = observation['title'];
     this.observation.description = observation['description'];
+    this.observation.category = 1;
     this.observation.tags = this.tags.map(t => { return t.tag });
     this.disableForm()
     // console.log(this.observation);
@@ -119,7 +120,6 @@ export class CreateObservationComponent implements OnInit {
       fieldTitle: val.fieldTitle,
       fieldType: val.fieldType['value']
     });
-    this.observation.category = 1;
     console.log(JSON.stringify(this.observation));
 
     this.observationService.addObservation(this.observation)
@@ -155,49 +155,77 @@ export class CreateObservationComponent implements OnInit {
     //     console.log(error);
     //   })
 
-    this.googleAppService.load(urlId)
-      .subscribe(data => {
-        this.data = data;
-        // console.log(data[0]);
-        let singleSubject = data[0];
-          for(let key in singleSubject){
-            let val = {'fieldTitle': key, 'fieldType': 3}
-            this.fields.push(val)
-          }
+    // this.googleAppService.load(urlId)
+    //   .subscribe(data => {
+    //     this.data = data;
+    //     // console.log(data[0]);
+    //     let singleSubject = data[0];
+    //       for(let key in singleSubject){
+    //         let val = {'fieldTitle': key, 'fieldType': 3}
+    //         this.fields.push(val)
+    //       }
 
-          this.observation.fields = this.fields;
-          this.observation.category = 1;
-          console.log(this.observation);
-          this.observationService.addObservation(this.observation)
-            .subscribe(res => {
-              console.log(res['observationId']);
-              this.snackBarMessage('Observation created Successfully', 'success');
-              // let record = {
-              //   'observationId': res['observationId'],
-              //   'data': this.data.forEach(element => {
-              //     return element 
-              //   })
-              // }
-              // console.log(record);
-              // this.addRecordService.addRecord(record).subscribe(res => {
-              //   console.log('record added successfully');
-              // })
-            },
-            (err) => {
-              this.snackBarMessage('Observation can\'t be added', 'failed' );
+    //       this.observation.fields = this.fields;
+    //       this.observation.category = 1;
+    //       console.log(this.observation);
+    //       this.observationService.addObservation(this.observation)
+    //         .subscribe(res => {
+    //           console.log(res['observationId']);
+    //           this.snackBarMessage('Observation created Successfully', 'success');
+    //           // let record = {
+    //           //   'observationId': res['observationId'],
+    //           //   'data': this.data.forEach(element => {
+    //           //     return element 
+    //           //   })
+    //           // }
+    //           // console.log(record);
+    //           // this.addRecordService.addRecord(record).subscribe(res => {
+    //           //   console.log('record added successfully');
+    //           // })
+    //         },
+    //         (err) => {
+    //           this.snackBarMessage('Observation can\'t be added', 'failed' );
+    //         })
+
+    //       // console.log(this.fields);
+    //   },
+    //   (error) => {
+    //     console.log('Can\'t load data');
+    //   },
+    //   () =>{
+
+    //   })
+
+
+    let message = '';
+    let data = {}
+
+    this.observation.fields = [];
+
+    this.observationService.addObservation(this.observation)
+      .subscribe(res => {
+        // console.log(res);
+        data = {
+          'observationId': res['observationId'],
+          'spreadSheetId': urlId
+        }
+        this.googleAppService.importSreadsheet(data)
+          .subscribe(resImport => {
+            this.snackBarMessage(resImport.toString(), 'Success')
+          },
+            (error) => {
+              if (error.status === 400)
+                message = error.error.error.toString().split();
+                this.snackBarMessage(message, "Falied");
+                console.log(error);
             })
-
-          // console.log(this.fields);
+        console.log(data);
+        this.snackBarMessage('Observation imported successfully', 'Success');
       },
-      (error) => {
-        console.log('Can\'t load data');
-      },
-      () =>{
-        
-      })
-    
-    
-    
+      (error: Response) => {
+        console.log(error);
+        this.snackBarMessage('Failed to add Observation', 'Failed');
+      });
   }
 
   disableForm() {
@@ -216,7 +244,7 @@ export class CreateObservationComponent implements OnInit {
     this.enableForm();
   }
 
-  cancelImport(){
+  cancelImport() {
     this.enableForm();
     this.importSelection = false;
   }

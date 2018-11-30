@@ -19,7 +19,9 @@ export class RecordDataSource extends BaseDataSource {
         this.recordService.getRecord(observationId).pipe(
             tap(res => {
                 
+                
                 console.log('In tap');
+                console.log(res);
                 for(let index in res['records']){
                     // console.log(key);
                     // console.log(res['records'][0]['data'][key]);
