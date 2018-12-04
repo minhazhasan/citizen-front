@@ -21,6 +21,7 @@ export class ListRecordsComponent implements OnInit {
   checked = false;
   indeterminate = false;
   dataSource: RecordDataSource;
+  tableHeight =  '';
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -42,6 +43,9 @@ export class ListRecordsComponent implements OnInit {
     this.dataSource.loadRecords(this.observationDetails.observationId, 0, 10, '')
 
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    if(this.dataSource.hasItems){
+      this.tableHeight = '550px';
+    }
 
     // console.log(this.observationDetails);
 
@@ -74,10 +78,14 @@ export class ListRecordsComponent implements OnInit {
       this.paginator.pageIndex, 
       this.paginator.pageSize, 
       this.searchInput.nativeElement['value']);
-  }
+  };
 
   addRecord() {
     this.router.navigateByUrl(`citizenpanel/addrecord/${this.observationDetails.observationId}`);
   };
+
+  updateObservation(){
+    this.router.navigateByUrl(`citizenpanel/updateobservation/${this.observationDetails.observationId}`);
+  }
 
 }

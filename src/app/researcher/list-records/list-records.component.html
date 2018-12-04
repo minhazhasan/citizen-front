@@ -58,7 +58,7 @@
         <div class="record-list">
           <perfect-scrollbar>
             <mat-table class="lmat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc"
-              matSortDisableClear style="height: 550px;">
+              matSortDisableClear [ngStyle]="{'height': tableHeight}">
               <!-- Material table HTML -->
               <!-- <ng-container *ngFor="let rec of dataSource.records">
 
@@ -73,7 +73,7 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Value</mat-header-cell>
                 <mat-cell *matCellDef="let records">{{records.fieldValue}}</mat-cell>
               </ng-container>
-
+              <div class="mat-table_message" *ngIf="!dataSource.hasItems">No records found</div><!-- Message for empty data  -->
               <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let row">
@@ -90,13 +90,12 @@
               <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
             </mat-table>
           </perfect-scrollbar>
-          <div class="mat-table_message" *ngIf="!dataSource.hasItems" style="margin-top: 12px;">No records found</div><!-- Message for empty data  -->
           <div class="spinner-container" *ngIf="dataSource.loading$ | async">
 
             <mat-spinner [diameter]="35"></mat-spinner>
 
           </div>
-
+          <div class="mat-table_message" *ngIf="!dataSource.hasItems" style="margin-top: 12px;">No records found</div><!-- Message for empty data  -->
           <mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async"
             [showFirstLastButtons]="true"></mat-paginator>
           <!-- <mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner> -->
@@ -124,7 +123,7 @@
       <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
 
         <div fxFlex="40">
-          <h3 class="mat-subheading-2 center-align">Title</h3>
+          <h3 class="mat-subheading-2 center-align">Title:</h3>
 
         </div>
         <div fxFlex="60" fxLayout="column" fxLayoutAlign="center start">
@@ -136,7 +135,7 @@
       <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
 
         <div fxFlex="40">
-          <h3 class="mat-subheading-2 center-align">Description</h3>
+          <h3 class="mat-subheading-2 center-align">Description:</h3>
 
         </div>
         <div fxFlex="60" fxLayout="column" fxLayoutAlign="center start">
@@ -148,7 +147,7 @@
       <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
 
         <div fxFlex="40">
-          <h3 class="mat-subheading-2 center-align">Category</h3>
+          <h3 class="mat-subheading-2 center-align">Category:</h3>
 
         </div>
         <div fxFlex="60" fxLayout="column" fxLayoutAlign="center start">
@@ -160,7 +159,7 @@
       <div fxLayout="column" fxLayoutAlign="space-between start" style="margin-top: 10px;">
 
         <div>
-          <h3 class="mat-subheading-2 center-align">Fields</h3>
+          <h3 class="mat-subheading-2 center-align">Fields:</h3>
 
         </div>
         <perfect-scrollbar>
@@ -168,8 +167,8 @@
             <mat-nav-list fxFlex>
               <mat-list-item *ngFor="let field of observationDetails.fields">
                 <div fxLayout="row" fxLayoutGap="55px" fxLayoutAlign="start space-around">
-                  <span fxFlex="65px">{{field.title}}</span>
-                  <span fxFlex="65px">{{field.type}}</span>
+                  <span fxFlex="125px">{{field.title}}</span>
+                  <span fxFlex="35px">{{field.type}}</span>
                 </div>
                 <mat-divider></mat-divider>
               </mat-list-item>
@@ -224,7 +223,7 @@
 
       <div fxFlex fxLayout="column" fxLayoutAlign="end flex-end">
         <div fxLayout="row" fxLayoutAlign="space-between stretch">
-          <button mat-raised-button color="primary">Update</button>
+          <button mat-raised-button color="primary" (click)="updateObservation()">Update</button>
         </div>
       </div>
     </div>
