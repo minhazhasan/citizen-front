@@ -25,4 +25,16 @@ export class ObservationDataSource extends BaseDataSource {
         ).subscribe();
     }
 
+    loadAllObservations(searchText: string, pageNumber: number, pageSize: number, sortOrder: string) {
+        this.loadingSubject.next(true);
+        this.observationService.getAllObservations(searchText, pageNumber, pageSize, sortOrder).pipe(
+            tap(res => {
+                this.entitySubject.next(res['observations']);
+                this.paginatorTotalSubject.next(res['totalCount']);
+            }),
+            catchError(err => of([])),
+            finalize(() => this.loadingSubject.next(false))
+        ).subscribe();
+    }
+
 }

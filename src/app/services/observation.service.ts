@@ -27,6 +27,16 @@ export class ObservationService {
     });
   }
 
+  getAllObservations(searchText: string, pageNumber: number, pageSize: number, sortOrder = 'asc') {
+    return this.http.get(`${API_URL}/observation`, {
+      params: new HttpParams()
+        .set('searchText', searchText)
+        .set('page', pageNumber.toString())
+        .set('limit', pageSize.toString())
+        .set('sortOrder', sortOrder)
+    });
+  }
+
   getObservationById(observationId: string){
     return this.http.get(`${API_URL}/observation`, {
       params: new HttpParams().set('observationId', observationId)

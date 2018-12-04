@@ -40,7 +40,7 @@ export class ExploreObservationsComponent implements OnInit {
     this.accountId = currentUser['accountId'];
 
     this.dataSource = new ObservationDataSource(this.observationService);
-    this.dataSource.loadObservations('', this.accountId, 0, 10, 'asc');
+    this.dataSource.loadAllObservations('', 0, 10, 'asc');
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
