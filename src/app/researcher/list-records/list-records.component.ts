@@ -22,12 +22,18 @@ export class ListRecordsComponent implements OnInit {
   indeterminate = false;
   dataSource: RecordDataSource;
   tableHeight =  '';
+  fieldsTypeValue = new Map([
+    ['File', 1],
+    ['Number', 2],
+    ['Text', 3]
+  ]);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('searchInput') searchInput: ElementRef;
 
   displayedColumns = ['field', 'value', 'actions'];
+  fieldsVal = [];
 
 
   constructor(private route: ActivatedRoute, private router: Router,
@@ -38,6 +44,23 @@ export class ListRecordsComponent implements OnInit {
   ngOnInit() {
     this.observationDetails = new Observation();
     this.observationDetails = this.route.snapshot.data.data.observations[0];
+
+    for(let val of this.observationDetails.fields){
+      let data = {};
+      if(val['type'] == 1){
+        data = {'fieldTitle': val['title'], 'fieldType': 'File'}
+      }
+      else if(val['type'] == 2){
+        data = {'fieldTitle': val['title'], 'fieldType': 'Number'}
+      }
+      else{
+        data = {'fieldTitle': val['title'], 'fieldType': 'Text'}
+      }
+
+      this.fieldsVal.push(data)
+    };
+
+    console.log(this.fieldsVal);
 
     this.dataSource = new RecordDataSource(this.recordService);
     this.dataSource.loadRecords(this.observationDetails.observationId, 0, 10, '')
